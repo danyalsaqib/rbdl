@@ -11,6 +11,9 @@ INCLUDE_DIRECTORIES (
 	${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/urdfparser/include
 )
 
+# SET (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+INCLUDE(GNUInstallDirs)
+
 SET ( URDFREADER_SOURCES
 	urdfreader.cc
 	)
