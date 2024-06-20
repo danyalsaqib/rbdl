@@ -9,7 +9,7 @@
 using namespace std;
 
 bool verbose = false;
-bool floatbase = false;
+//bool floatbase = false;
 RigidBodyDynamics::FloatingBaseType floatbase = RigidBodyDynamics::FloatingBaseType::FixedBase;
 string filename = "";
 
