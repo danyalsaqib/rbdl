@@ -61,12 +61,12 @@ int main (int argc, char *argv[]) {
 
 	if (dof_overview) {
 		cout << "Degree of freedom overview:" << endl;
-		cout << RigidBodyDynamics::Utils::GetModelDOFOverview(model, lol);
+		cout << RigidBodyDynamics::Utils::GetModelDOFOverview(model, *lol);
 	}
 
 	if (model_hierarchy) {
 		cout << "Model Hierarchy:" << endl;
-		cout << RigidBodyDynamics::Utils::GetModelHierarchy (model, lol);
+		cout << RigidBodyDynamics::Utils::GetModelHierarchy (model, *lol);
 	}
 
 	return 0;
