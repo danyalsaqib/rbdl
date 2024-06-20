@@ -3,10 +3,21 @@
 
 #include <rbdl/rbdl_config.h>
 #include <rbdl/rbdl_math.h>
+#include <iostream>
+
+
+using namespace std;
+
+using LinkPtr = urdf::LinkSharedPtr;
+using ConstLinkPtr = urdf::LinkConstSharedPtr;
+using JointPtr = urdf::JointSharedPtr;
 
 namespace RigidBodyDynamics {
 
 struct Model;
+
+/* Check if the specified link is inside this urdf submodel */
+bool isLinkInUrdfModel(LinkPtr link, std::string tip)
 
 namespace Addons {
   /**
@@ -19,17 +30,17 @@ namespace Addons {
    *                 is set to true
    */
     int initialize_root(Model &rbdl_model, ModelDatad &model_data, ConstLinkPtr urdf_link,
-                        const FloatingBaseType floating_base_type)
+                        const FloatingBaseType floating_base_type);
 
 
     int initialize_link(Model &rbdl_model, ModelDatad &model_data, ConstLinkPtr urdf_link,
-                        const int parent_id)
+                        const int parent_id);
 
 
-    bool construct_model(Model &rbdl_model, ModelDatad &model_data, ConstLinkPtr urdf_link, int parent_id)
+    bool construct_model(Model &rbdl_model, ModelDatad &model_data, ConstLinkPtr urdf_link, int parent_id);
 
     bool construct_model_cuttips(Model &rbdl_model, ModelDatad &model_data, ConstLinkPtr urdf_link,
-                                const int parent_id, const std::vector<std::string> &tipLinks)
+                                const int parent_id, const std::vector<std::string> &tipLinks);
 
 
     // ============================================================
@@ -39,16 +50,16 @@ namespace Addons {
     // basic version with explicit root
     bool URDFReadFromURDF(Model *model, ModelDatad &model_data,
                         urdf::LinkConstSharedPtr root,
-                        const FloatingBaseType floating_base_type, const bool verbose)
+                        const FloatingBaseType floating_base_type, const bool verbose);
         // basic version (default root)
     bool URDFReadFromURDF(urdf::Model &urdf_model, Model *model, ModelDatad &model_data,
-                        const FloatingBaseType floating_base_type, const bool verbose)
+                        const FloatingBaseType floating_base_type, const bool verbose);
 
 
     // cut tips
     bool URDFReadFromURDF(urdf::Model &urdf_model, Model *model, ModelDatad &model_data,
                         const std::vector<std::string> &tip_links,
-                        const FloatingBaseType floating_base_type, const bool verbose)
+                        const FloatingBaseType floating_base_type, const bool verbose);
 
     // basic version with extra info and explicit root
     bool URDFReadFromURDF(urdf::Model &urdf_model, Model *model, ModelDatad &model_data,
@@ -58,7 +69,7 @@ namespace Addons {
                         std::vector<double> &position_min, std::vector<double> &position_max,
                         std::vector<double> &vel_min, std::vector<double> &vel_max,
                         std::vector<double> &damping, std::vector<double> &friction,
-                        std::vector<double> &max_effort, const bool verbose)
+                        std::vector<double> &max_effort, const bool verbose);
     
     // basic version with extra info and default root
     bool URDFReadFromURDF(urdf::Model &urdf_model, Model *model, ModelDatad &model_data,
@@ -67,7 +78,7 @@ namespace Addons {
                         std::vector<double> &position_min, std::vector<double> &position_max,
                         std::vector<double> &vel_min, std::vector<double> &vel_max,
                         std::vector<double> &damping, std::vector<double> &friction,
-                        std::vector<double> &max_effort, const bool verbose)
+                        std::vector<double> &max_effort, const bool verbose);
 
     // cut tips + extra info
     bool URDFReadFromURDF(urdf::Model &urdf_model, Model *model, ModelDatad &model_data,
@@ -77,7 +88,7 @@ namespace Addons {
                         std::vector<double> &position_min, std::vector<double> &position_max,
                         std::vector<double> &vel_min, std::vector<double> &vel_max,
                         std::vector<double> &damping, std::vector<double> &friction,
-                        std::vector<double> &max_effort, const bool verbose)
+                        std::vector<double> &max_effort, const bool verbose);
     
     // compatibility
     bool URDFReadFromURDF(urdf::Model &urdf_model, Model *model,
@@ -86,16 +97,16 @@ namespace Addons {
                         std::vector<double> &position_min, std::vector<double> &position_max,
                         std::vector<double> &vel_min, std::vector<double> &vel_max,
                         std::vector<double> &damping, std::vector<double> &friction,
-                        std::vector<double> &max_effort, const bool verbose)
+                        std::vector<double> &max_effort, const bool verbose);
     
     // ============================================================
     // from a string
     // ============================================================
 
-    bool initializeURDFModelFromString(urdf::Model &urdf_model, const char *model_xml_string)
+    bool initializeURDFModelFromString(urdf::Model &urdf_model, const char *model_xml_string);
     
     bool URDFReadFromString(const char *model_xml_string, Model *model, ModelDatad &model_data,
-                            const FloatingBaseType floating_base_type, const bool verbose)
+                            const FloatingBaseType floating_base_type, const bool verbose);
     
     bool URDFReadFromString(const char *model_xml_string, Model *model,
                             ModelDatad &model_data, const FloatingBaseType floating_base_type,
@@ -103,7 +114,7 @@ namespace Addons {
                             std::vector<double> &position_min, std::vector<double> &position_max,
                             std::vector<double> &vel_min, std::vector<double> &vel_max,
                             std::vector<double> &damping, std::vector<double> &friction,
-                            std::vector<double> &max_effort, const bool verbose)
+                            std::vector<double> &max_effort, const bool verbose);
     
     // compatibility
     bool URDFReadFromString(const char *model_xml_string, Model *model,
@@ -112,20 +123,20 @@ namespace Addons {
                             std::vector<double> &position_min, std::vector<double> &position_max,
                             std::vector<double> &vel_min, std::vector<double> &vel_max,
                             std::vector<double> &damping, std::vector<double> &friction,
-                            std::vector<double> &max_effort, const bool verbose)
+                            std::vector<double> &max_effort, const bool verbose);
     
     // compatibility
     bool URDFReadFromString(const char *model_xml_string, Model *model,
-                            const FloatingBaseType floating_base_type, const bool verbose)
+                            const FloatingBaseType floating_base_type, const bool verbose);
     
     // ============================================================
     // from the parameter server
     // ============================================================
 
-    bool initializeURDFModelFromParamServer(urdf::Model &urdf_model)
+    bool initializeURDFModelFromParamServer(urdf::Model &urdf_model);
     
     bool URDFReadFromParamServer(Model *model, ModelDatad &model_data,
-                                const FloatingBaseType floating_base_type, const bool verbose)
+                                const FloatingBaseType floating_base_type, const bool verbose);
     
     bool URDFReadFromParamServer(Model *model, ModelDatad &model_data,
                                 const FloatingBaseType floating_base_type,
@@ -133,12 +144,12 @@ namespace Addons {
                                 std::vector<double> &position_min, std::vector<double> &position_max,
                                 std::vector<double> &vel_min, std::vector<double> &vel_max,
                                 std::vector<double> &damping, std::vector<double> &friction,
-                                std::vector<double> &max_effort, const bool verbose)
+                                std::vector<double> &max_effort, const bool verbose);
     
     // cut tips
     bool URDFReadFromParamServer(Model *model, ModelDatad &model_data,
                                 const std::vector<std::string> &tipLinks,
-                                const FloatingBaseType floating_base_type, const bool verbose)
+                                const FloatingBaseType floating_base_type, const bool verbose);
     
     bool URDFReadFromParamServer(Model *model, ModelDatad &model_data,
                                 const FloatingBaseType floating_base_type,
@@ -147,15 +158,15 @@ namespace Addons {
                                 std::vector<double> &position_min, std::vector<double> &position_max,
                                 std::vector<double> &vel_min, std::vector<double> &vel_max,
                                 std::vector<double> &damping, std::vector<double> &friction,
-                                std::vector<double> &max_effort, const bool verbose)
+                                std::vector<double> &max_effort, const bool verbose);
 
     // compatibility
     bool URDFReadFromParamServer(Model *model, const FloatingBaseType floating_base_type,
-                                const bool verbose)
+                                const bool verbose);
     
     // compatibility
     bool URDFReadFromParamServer(Model *model, const std::vector<std::string> &tipLinks,
-                                const FloatingBaseType floating_base_type, const bool verbose)
+                                const FloatingBaseType floating_base_type, const bool verbose);
     
     // compatibility
     bool URDFReadFromParamServer(Model *model, const FloatingBaseType floating_base_type,
@@ -163,7 +174,7 @@ namespace Addons {
                                 std::vector<double> &position_min, std::vector<double> &position_max,
                                 std::vector<double> &vel_min, std::vector<double> &vel_max,
                                 std::vector<double> &damping, std::vector<double> &friction,
-                                std::vector<double> &max_effort, const bool verbose)
+                                std::vector<double> &max_effort, const bool verbose);
     
     // compatibility
     bool URDFReadFromParamServer(Model *model, const FloatingBaseType floating_base_type,
@@ -172,17 +183,17 @@ namespace Addons {
                                 std::vector<double> &position_min, std::vector<double> &position_max,
                                 std::vector<double> &vel_min, std::vector<double> &vel_max,
                                 std::vector<double> &damping, std::vector<double> &friction,
-                                std::vector<double> &max_effort, const bool verbose)
+                                std::vector<double> &max_effort, const bool verbose);
     
 
     // ============================================================
     // from a file
     // ============================================================
 
-    bool initializeURDFModelFromFile(urdf::Model &urdf_model, const char *filename)
+    bool initializeURDFModelFromFile(urdf::Model &urdf_model, const char *filename);
     
     bool URDFReadFromFile(const char *filename, Model *model, ModelDatad &model_data,
-                        const FloatingBaseType floating_base_type, const bool verbose)
+                        const FloatingBaseType floating_base_type, const bool verbose);
     
     bool URDFReadFromFile(const char *filename, Model *model, ModelDatad &model_data,
                         const FloatingBaseType floating_base_type,
@@ -190,11 +201,11 @@ namespace Addons {
                         std::vector<double> &position_min, std::vector<double> &position_max,
                         std::vector<double> &vel_min, std::vector<double> &vel_max,
                         std::vector<double> &damping, std::vector<double> &friction,
-                        std::vector<double> &max_effort, const bool verbose)
+                        std::vector<double> &max_effort, const bool verbose);
     
     // compatibility
     bool URDFReadFromFile(const char *filename, Model *model,
-                        const FloatingBaseType floating_base_type, const bool verbose)
+                        const FloatingBaseType floating_base_type, const bool verbose);
     
     // compatibility
     bool URDFReadFromFile(const char *filename, Model *model, const FloatingBaseType floating_base_type,
@@ -202,7 +213,7 @@ namespace Addons {
                         std::vector<double> &position_min, std::vector<double> &position_max,
                         std::vector<double> &vel_min, std::vector<double> &vel_max,
                         std::vector<double> &damping, std::vector<double> &friction,
-                        std::vector<double> &max_effort, const bool verbose)
+                        std::vector<double> &max_effort, const bool verbose);
     
     ///////////////////////////
 
@@ -211,8 +222,8 @@ namespace Addons {
                             std::vector<double> &position_max, std::vector<double> &vel_min,
                             std::vector<double> &vel_max, std::vector<double> &damping,
                             std::vector<double> &friction, std::vector<double> &max_effort,
-                            const FloatingBaseType floating_base_type)
+                            const FloatingBaseType floating_base_type);
+    }
 }
-
 /* _RBDL_URDFREADER_H */
 #endif
