@@ -1,7 +1,8 @@
 #include <rbdl/rbdl.h>
 #include <rbdl/rbdl_utils.h>
 
-#include "urdfreader.h"
+//#include "urdfreader.h"
+#include "urdfreader.cc"
 
 #include <iostream>
 
@@ -9,6 +10,7 @@ using namespace std;
 
 bool verbose = false;
 bool floatbase = false;
+RigidBodyDynamics::FloatingBaseType floatbase = RigidBodyDynamics::FloatingBaseType::FixedBase;
 string filename = "";
 
 void usage (const char* argv_0) {
@@ -39,7 +41,8 @@ int main (int argc, char *argv[]) {
 		else if (string(argv[i]) == "-m" || string (argv[i]) == "--model-hierarchy")
 			model_hierarchy = true;
 		else if (string(argv[i]) == "-f" || string (argv[i]) == "--floatbase")
-			floatbase = true;
+			//floatbase = true;
+			floatbase = RigidBodyDynamics::FloatingBaseType::FixedBase;
 		else if (string(argv[i]) == "-h" || string (argv[i]) == "--help")
 			usage(argv[0]);
 		else
@@ -47,6 +50,7 @@ int main (int argc, char *argv[]) {
 	}
 
 	RigidBodyDynamics::Model model;
+	RigidBodyDynamics::ModelDatad* lol = model.getModelData();
 
 	if (!RigidBodyDynamics::Addons::URDFReadFromFile(filename.c_str(), &model, floatbase, verbose)) {
 		cerr << "Loading of urdf model failed!" << endl;
@@ -57,12 +61,12 @@ int main (int argc, char *argv[]) {
 
 	if (dof_overview) {
 		cout << "Degree of freedom overview:" << endl;
-		cout << RigidBodyDynamics::Utils::GetModelDOFOverview(model);
+		cout << RigidBodyDynamics::Utils::GetModelDOFOverview(model, lol);
 	}
 
 	if (model_hierarchy) {
 		cout << "Model Hierarchy:" << endl;
-		cout << RigidBodyDynamics::Utils::GetModelHierarchy (model);
+		cout << RigidBodyDynamics::Utils::GetModelHierarchy (model, lol);
 	}
 
 	return 0;
